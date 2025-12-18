@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>12 Pubs Starting XI</title>
+  <style>
+    :root{
+      --bg:#0b1220; --panel:rgba(255,255,255,.06);
+      --text:#eaf0ff; --muted:rgba(234,240,255,.75);
+      --badge:rgba(0,0,0,.45); --line:rgba(255,255,255,.35);
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(78,161,255,.25), transparent 60%),
+        radial-gradient(900px 500px at 90% 20%, rgba(129,78,255,.18), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding:24px;
+    }
+
+    .wrap{
+      width:min(1180px,100%);
+      display:grid;
+      grid-template-columns: 1.65fr 1fr;
+      gap:18px;
+      align-items:start;
+    }
+    @media (max-width:980px){ .wrap{grid-template-columns:1fr;} }
+
+    /* Header */
+    .topbar{
+      grid-column:1 / -1;
+      display:flex; gap:14px;
+      align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-radius:var(--radius);
+      background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .title{display:flex; flex-direction:column; gap:2px;}
+    .title h1{margin:0; font-size:18px; letter-spacing:.6px; text-transform:uppercase;}
+
+    /* Cards */
+    .card{
+      border-radius:16px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      padding:12px;
+      box-shadow:var(--shadow);
+    }
+    .secTitle{
+      margin:0 0 8px 0;
+      font-size:13px;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.85);
+    }
+
+    /* PITCH */
+    .pitchCard{
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    }
+    .pitch{
+      position:relative;
+      aspect-ratio: 16 / 11.6;
+      min-height: 560px;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(180deg, #1b7a38, #11622a);
+      background-size:60px 60px, 60px 60px, auto;
+    }
+
+    .pitch::before{
+      content:"";
+      position:absolute; inset:26px;
+      border:2px solid var(--line);
+      border-radius:12px;
+      pointer-events:none;
+    }
+    .halfway{
+      position:absolute; left:26px; right:26px; top:50%;
+      height:0; border-top:2px solid var(--line);
+      transform:translateY(-1px);
+      pointer-events:none;
+    }
+    .centerCircle{
+      position:absolute; left:50%; top:50%;
+      width:170px; height:170px;
+      border:2px solid var(--line);
+      border-radius:999px;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+    .centerSpot{
+      position:absolute; left:50%; top:50%;
+      width:8px; height:8px; background:var(--line);
+      border-radius:999px;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+
+    .boxTop, .boxBottom, .sixTop, .sixBottom{
+      position:absolute; left:50%;
+      border:2px solid var(--line);
+      transform:translateX(-50%);
+      pointer-events:none;
+    }
+    .boxTop{ top:26px; width:260px; height:170px; border-top:none; }
+    .boxBottom{ bottom:26px; width:260px; height:170px; border-bottom:none; }
+    .sixTop{ top:26px; width:150px; height:78px; border-top:none; }
+    .sixBottom{ bottom:26px; width:150px; height:78px; border-bottom:none; }
+
+    /* Players on pitch */
+    .player{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      width:84px;
+      text-align:center;
+      user-select:none;
+    }
+
+    .avatar{
+      width:62px; height:62px;
+      border-radius:999px;
+      margin:0 auto 6px auto;
+      border:2px solid rgba(255,255,255,.7);
+      box-shadow:0 10px 22px rgba(0,0,0,.35);
+      background:rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover; display:block;}
+    .nameTag{
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+      justify-content:center;
+      max-width:108px;
+      padding:6px 8px;
+      border-radius:10px;
+      background:var(--badge);
+      border:1px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 22px rgba(0,0,0,.25);
+      font-size:11.5px;
+      line-height:1.05;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .num{
+      font-weight:700;
+      color:#fff;
+      background:rgba(78,161,255,.35);
+      border:1px solid rgba(78,161,255,.55);
+      padding:3px 6px;
+      border-radius:8px;
+      flex:0 0 auto;
+    }
+    .nm{max-width:120px; overflow:hidden; text-overflow:ellipsis;}
+    .pos{
+      display:block;
+      margin-top:4px;
+      font-size:11px;
+      color:rgba(255,255,255,.85);
+      opacity:.95;
+    }
+
+    /* RIGHT PANEL */
+    .side{
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      box-shadow:var(--shadow);
+    }
+    .teamRow{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .teamName{font-weight:800; letter-spacing:.6px; text-transform:uppercase; font-size:14px;}
+    .manager{font-size:13px; color:var(--muted);}
+
+    .row{
+      display:grid;
+      grid-template-columns:34px 1fr;
+      gap:10px;
+      padding:10px;
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      margin-bottom:8px;
+      cursor:pointer;
+    }
+    .row:hover{
+      border-color:rgba(78,161,255,.5);
+      background:rgba(78,161,255,.10);
+    }
+    .row .idx{
+      width:34px; height:34px;
+      border-radius:12px;
+      display:grid; place-items:center;
+      background:rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:700;
+    }
+    .row .meta{display:flex; flex-direction:column; gap:3px; min-width:0;}
+    .row .meta .n{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .row .meta .p{font-size:12px; color:var(--muted); display:flex; gap:8px; flex-wrap:wrap;}
+
+    /* UNDER-PITCH */
+    .underPitch{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px;}
+
+    /* Bench visual under pitch */
+    .benchGrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:12px;
+    }
+    .benchSlot{
+      display:grid;
+      place-items:center;
+      padding:12px 10px;
+      border-radius:16px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .benchSlot .avatar{ width:72px; height:72px; margin-bottom:8px; }
+    .benchSlot .nameTag{ max-width:160px; }
+
+    .statGrid{display:grid; grid-template-columns:1fr; gap:10px;}
+    .statItem{
+      display:grid; gap:4px;
+      padding:10px;
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .statItem small{color:var(--muted); letter-spacing:.3px;}
+    .statItem b{font-size:14px; font-weight:800;}
+
+    .fixture{display:flex; flex-direction:column; gap:6px;}
+    .fixtureRow{
+      display:grid;
+      grid-template-columns: 92px 1fr;
+      gap:10px;
+      align-items:center;
+      padding:10px;
+      border-radius:14px;
+      background:rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .fixtureRow .date{font-weight:800; letter-spacing:.3px; font-size:12px; color:rgba(255,255,255,.9);}
+    .fixtureRow .match{font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .fixtureRow .meta2{margin-top:2px; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+    /* Modal */
+    .modalBackdrop{
+      position:fixed; inset:0;
+      background:rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+    }
+    .modal{
+      width:min(560px,100%);
+      border-radius:18px;
+      background:#0c1426;
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(255,255,255,.05);
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .modalHead strong{text-transform:uppercase; letter-spacing:.6px; font-size:13px;}
+    .modalBody{padding:14px 16px; display:grid; gap:10px;}
+    .field{display:grid; gap:6px;}
+    .field label{font-size:12px; color:var(--muted);}
+    .field input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      color:var(--text);
+      font-size:13px;
+    }
+    .modalFoot{
+      padding:14px 16px;
+      display:flex; justify-content:flex-end; gap:10px;
+      border-top:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+    }
+    button{
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:10px;
+      padding:8px 10px;
+      font-size:13px;
+      cursor:pointer;
+    }
+    button:hover{ border-color: rgba(78,161,255,.55); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">
+        <h1 id="pageTitle">12 Pubs Starting XI</h1>
+      </div>
+    </div>
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="pitchCard">
+        <div class="pitch" id="pitch">
+          <div class="halfway"></div>
+          <div class="centerCircle"></div>
+          <div class="centerSpot"></div>
+          <div class="boxTop"></div>
+          <div class="boxBottom"></div>
+          <div class="sixTop"></div>
+          <div class="sixBottom"></div>
+        </div>
+      </div>
+
+      <div class="underPitch">
+        <!-- Bench under pitch -->
+        <div class="card">
+          <h3 class="secTitle">Bench</h3>
+          <div class="benchGrid" id="benchVisual"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="secTitle">Team Stats</h3>
+          <div class="statGrid" id="statsArea"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="secTitle">Upcoming Fixtures</h3>
+          <div class="fixture" id="fixturesArea"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="side">
+      <div class="card" style="box-shadow:none;">
+        <div class="teamRow">
+          <div>
+            <div class="teamName" id="teamName">Junkie FC</div>
+            <div class="manager" id="managerName">Manager: JJ</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="box-shadow:none;">
+        <h3 class="secTitle">Starting XI</h3>
+        <div id="playerList"></div>
+      </div>
+
+      <div class="card" style="box-shadow:none;">
+        <h3 class="secTitle">Bench (click to edit)</h3>
+        <div id="benchList"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal -->
+  <div class="modalBackdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <strong id="modalTitle">Edit Player</strong>
+        <button id="closeModalBtn" type="button">Close</button>
+      </div>
+      <div class="modalBody">
+        <div class="field">
+          <label>Player name</label>
+          <input id="inName" placeholder="e.g., Harry Kane" />
+        </div>
+        <div class="field">
+          <label>Number</label>
+          <input id="inNumber" placeholder="e.g., 9" />
+        </div>
+        <div class="field">
+          <label>Position label (short)</label>
+          <input id="inPos" placeholder="e.g., SUB" />
+        </div>
+        <div class="field">
+          <label>Photo URL (or relative path)</label>
+          <input id="inPhoto" placeholder="e.g., https://... or images/player.jpg" />
+        </div>
+      </div>
+      <div class="modalFoot">
+        <button id="cancelBtn" type="button">Cancel</button>
+        <button id="saveBtn" type="button">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const teamInfo = {
+      title: "12 Pubs Starting XI",
+      teamName: "Junkie FC",
+      manager: "Malone"
+    };
+
+    const teamStats = [
+      { label: "Top Sniffer", value: "Nev – 91g Sniffed" },
+      { label: "Top Drinker", value: "Maxx – 710 Drinks" },
+      { label: "Most Tacticals", value: "Geroid – 34 Bokes" }
+    ];
+
+    const fixtures = [
+      { date: "Dec 20th", match: "Salmon Leap vs Junkie FC", meta: "12:00 • Away" },
+      { date: "Dec 20th", match: "Court Yard vs Junkie FC", meta: "12:45 • Away" },
+      { date: "Dec 20th", match: "The Middler vs Junkie FC", meta: "13:30 • Away" },
+      { date: "Dec 20th", match: "Town vs Junkie FC", meta: "14:15 • Away" },
+      { date: "Dec 20th", match: "The Flowing Tide vs Junkie FC", meta: "15:00 • Away" },
+      { date: "Dec 20th", match: "Mulligans vs Junkie FC", meta: "15:45 • Away" },
+      { date: "Dec 20th", match: "Bowe's Lounge vs Junkie FC", meta: "16:30 • Away" },
+      { date: "Dec 20th", match: "O'Neills vs Junkie FC", meta: "17:15 • Away" },
+      { date: "Dec 20th", match: "Kehoes vs Junkie FC", meta: "18:00 • Away" },
+      { date: "Dec 20th", match: "NEARY’S FC vs Junkie FC", meta: "18:45 • Away" },
+      { date: "Dec 20th", match: "O'Donoghues vs Junkie FC", meta: "19:30 • Away" },
+      { date: "Dec 20th", match: "McGrattans vs Junkie FC", meta: "20:15 • Away" }
+    ];
+
+    const demoLineup = [
+      { id:"GK",  name:"Lucian", number:"1",  pos:"GK",  photo:"images/lucian.jpg" },
+      { id:"LB",  name:"Danny",  number:"44", pos:"LB",  photo:"images/danny.jpeg" },
+      { id:"LCB", name:"Maxx",   number:"3",  pos:"CB",  photo:"images/maxx2.jpg" },
+      { id:"RCB", name:"Malone", number:"4",  pos:"CB",  photo:"images/me.jpg" },
+      { id:"RB",  name:"Nev",    number:"69", pos:"RB",  photo:"images/nev2.jpg" },
+      { id:"LM",  name:"Geroid", number:"56", pos:"LW",  photo:"images/geroid4.jpg" },
+      { id:"LCM", name:"Hayden", number:"8",  pos:"CM",  photo:"images/cole.jpg" },
+      { id:"RCM", name:"Goughy", number:"5",  pos:"CM",  photo:"images/goughy.jpg" },
+      { id:"RM",  name:"Bren",   number:"7",  pos:"RW",  photo:"images/briz.jpg" },
+      { id:"ST1", name:"JP",     number:"10", pos:"ST",  photo:"images/jp.jpg" },
+      { id:"ST2", name:"Vin",    number:"9",  pos:"CAM", photo:"images/vin2.jpg" }
+    ];
+
+    // Bench players (2)
+    const demoBench = [
+      { id:"SUB1", name:"JJ", number:"12", pos:"SUB", photo:"images/jj.avif" },
+      { id:"SUB2", name:"Churchy", number:"13", pos:"SUB", photo:"images/churchy.jpg" }
+    ];
+
+    let lineup = structuredClone(demoLineup);
+    let bench = structuredClone(demoBench);
+
+    // LOCKED formation: 4-2-3-1
+    const formation = {
+      order: ["GK","LB","LCB","RCB","RB","LCM","RCM","LM","RM","ST2","ST1"],
+      coords: {
+        GK:{x:50,y:86},
+        LB:{x:16,y:70}, LCB:{x:36,y:73}, RCB:{x:64,y:73}, RB:{x:84,y:70},
+        LCM:{x:42,y:56}, RCM:{x:58,y:56},
+        LM:{x:22,y:38}, RM:{x:78,y:38}, ST2:{x:50,y:40},
+        ST1:{x:50,y:20}
+      }
+    };
+
+    const elPitch = document.getElementById("pitch");
+    const elList = document.getElementById("playerList");
+    const elStats = document.getElementById("statsArea");
+    const elFixtures = document.getElementById("fixturesArea");
+    const elBenchVisual = document.getElementById("benchVisual");
+    const elBenchList = document.getElementById("benchList");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const inName = document.getElementById("inName");
+    const inNumber = document.getElementById("inNumber");
+    const inPos = document.getElementById("inPos");
+    const inPhoto = document.getElementById("inPhoto");
+    const modalTitle = document.getElementById("modalTitle");
+    let editingId = null;
+    let editingGroup = "lineup";
+
+    document.getElementById("pageTitle").textContent = teamInfo.title;
+    document.getElementById("teamName").textContent = teamInfo.teamName;
+    document.getElementById("managerName").textContent = "Manager: " + teamInfo.manager;
+
+    function safeText(s){ return (s ?? "").toString().trim(); }
+    function getLineupById(id){ return lineup.find(p => p.id === id); }
+    function getBenchById(id){ return bench.find(p => p.id === id); }
+
+    function fallbackAvatarSvg(){
+      return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(`
+        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1">
+              <stop offset="0" stop-color="#4ea1ff" stop-opacity=".35"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity=".12"/>
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="#0b1220"/>
+          <circle cx="100" cy="82" r="36" fill="url(#g)"/>
+          <rect x="48" y="124" width="104" height="56" rx="28" fill="url(#g)"/>
+        </svg>
+      `);
+    }
+
+    function renderStats(){
+      elStats.innerHTML = "";
+      teamStats.forEach(s => {
+        const item = document.createElement("div");
+        item.className = "statItem";
+        item.innerHTML = `<small>${safeText(s.label)}</small><b>${safeText(s.value)}</b>`;
+        elStats.appendChild(item);
+      });
+    }
+
+    function renderFixtures(){
+      elFixtures.innerHTML = "";
+      fixtures.slice(0,12).forEach(f => {
+        const row = document.createElement("div");
+        row.className = "fixtureRow";
+        row.innerHTML = `
+          <div class="date">${safeText(f.date)}</div>
+          <div>
+            <div class="match">${safeText(f.match)}</div>
+            <div class="meta2">${safeText(f.meta)}</div>
+          </div>
+        `;
+        elFixtures.appendChild(row);
+      });
+    }
+
+    function renderPitchPlayers(){
+      elPitch.querySelectorAll(".player").forEach(n => n.remove());
+
+      const order = formation.order.slice(0,11);
+      order.forEach((slotId, idx) => {
+        const coord = formation.coords[slotId] || {x:50,y:50};
+        const p = getLineupById(slotId) || {id:slotId, name:"", number:"", pos:"", photo:""};
+
+        const node = document.createElement("div");
+        node.className = "player";
+        node.style.left = coord.x + "%";
+        node.style.top  = coord.y + "%";
+        node.dataset.id = slotId;
+
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+
+        const img = document.createElement("img");
+        img.alt = safeText(p.name) || "Player";
+        img.src = safeText(p.photo) || fallbackAvatarSvg();
+        avatar.appendChild(img);
+
+        const tag = document.createElement("div");
+        tag.className = "nameTag";
+
+        const num = document.createElement("span");
+        num.className = "num";
+        num.textContent = safeText(p.number) || (idx+1);
+
+        const nm = document.createElement("span");
+        nm.className = "nm";
+        nm.textContent = safeText(p.name) || "Player";
+
+        tag.appendChild(num);
+        tag.appendChild(nm);
+
+        const pos = document.createElement("span");
+        pos.className = "pos";
+        pos.textContent = safeText(p.pos) || "";
+
+        node.appendChild(avatar);
+        node.appendChild(tag);
+        node.appendChild(pos);
+        elPitch.appendChild(node);
+      });
+    }
+
+    function renderStartingList(){
+      elList.innerHTML = "";
+      const order = formation.order.slice(0,11);
+      order.forEach((slotId, idx) => {
+        const p = getLineupById(slotId) || {id:slotId, name:"", number:"", pos:"", photo:""};
+        const row = document.createElement("div");
+        row.className = "row";
+        row.dataset.id = slotId;
+        row.innerHTML = `
+          <div class="idx">${String(idx+1).padStart(2,"0")}</div>
+          <div class="meta">
+            <div class="n">${safeText(p.name) || "Player Name"}</div>
+            <div class="p">
+              <span>#${safeText(p.number) || (idx+1)}</span>
+              <span>${safeText(p.pos) || slotId}</span>
+            </div>
+          </div>
+        `;
+        row.addEventListener("click", () => openEditor("lineup", slotId));
+        elList.appendChild(row);
+      });
+    }
+
+    function renderBench(){
+      // visual under pitch
+      elBenchVisual.innerHTML = "";
+      bench.forEach((p) => {
+        const slot = document.createElement("div");
+        slot.className = "benchSlot";
+        slot.innerHTML = `
+          <div class="avatar"><img alt="${safeText(p.name) || "Bench"}" src="${safeText(p.photo) || fallbackAvatarSvg()}"></div>
+          <div class="nameTag">
+            <span class="num">${safeText(p.number) || ""}</span>
+            <span class="nm">${safeText(p.name) || "Sub"}</span>
+          </div>
+          <span class="pos">${safeText(p.pos) || "SUB"}</span>
+        `;
+        elBenchVisual.appendChild(slot);
+      });
+
+      // editable list on right
+      elBenchList.innerHTML = "";
+      bench.forEach((p, idx) => {
+        const row = document.createElement("div");
+        row.className = "row";
+        row.dataset.id = p.id;
+        row.innerHTML = `
+          <div class="idx">B${idx+1}</div>
+          <div class="meta">
+            <div class="n">${safeText(p.name) || "Sub"}</div>
+            <div class="p">
+              <span>#${safeText(p.number) || ""}</span>
+              <span>${safeText(p.pos) || "SUB"}</span>
+            </div>
+          </div>
+        `;
+        row.addEventListener("click", () => openEditor("bench", p.id));
+        elBenchList.appendChild(row);
+      });
+    }
+
+    function renderAll(){
+      renderPitchPlayers();
+      renderStartingList();
+      renderBench();
+      renderStats();
+      renderFixtures();
+    }
+
+    function openEditor(group, id){
+      editingGroup = group;
+      editingId = id;
+
+      const p = (group === "bench") ? getBenchById(id) : getLineupById(id);
+      if(!p) return;
+
+      modalTitle.textContent = "Edit: " + id;
+      inName.value = p.name || "";
+      inNumber.value = p.number || "";
+      inPos.value = p.pos || "";
+      inPhoto.value = p.photo || "";
+      modalBackdrop.style.display = "flex";
+    }
+
+    function closeEditor(){
+      modalBackdrop.style.display = "none";
+      editingId = null;
+    }
+
+    document.getElementById("closeModalBtn").addEventListener("click", closeEditor);
+    document.getElementById("cancelBtn").addEventListener("click", closeEditor);
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      if(!editingId) return;
+
+      const target = (editingGroup === "bench") ? getBenchById(editingId) : getLineupById(editingId);
+      if(target){
+        target.name = safeText(inName.value);
+        target.number = safeText(inNumber.value);
+        target.pos = safeText(inPos.value);
+        target.photo = safeText(inPhoto.value);
+      }
+      closeEditor();
+      renderAll();
+    });
+
+    modalBackdrop.addEventListener("click", (e) => { if(e.target === modalBackdrop) closeEditor(); });
+
+    renderAll();
+  </script>
+</body>
+</html>
